@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Demand(models.Model):
@@ -6,7 +7,7 @@ class Demand(models.Model):
         verbose_name='Descrição',
     )
     author = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         null=True,
         verbose_name='Anunciante'

@@ -6,6 +6,7 @@ class Contact(models.Model):
     demand = models.ForeignKey(
         Demand,
         on_delete=models.CASCADE,
+        related_name='contacts',
         null=True
     )
     name = models.CharField(
