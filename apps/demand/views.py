@@ -52,9 +52,9 @@ class DemandCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = DemandCreateSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save(author=request.user)
-            return response.Response(status=status.HTTP_200_OK)
+            return response.Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return response.Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -80,7 +80,7 @@ class DemandUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        if instance.author.id != request.user.id:
+        if request.user.profile == 2 and instance.author.id != request.user.id:
             return response.Response(status=status.HTTP_401_UNAUTHORIZED)
         self.perform_destroy(instance)
         return response.Response(status=status.HTTP_204_NO_CONTENT)
@@ -91,8 +91,10 @@ class DemandUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        if instance.author.id != request.user.id:
-            return response.Response(status=status.HTTP_401_UNAUTHORIZED)
+        if request.user.profile == 2 and instance.author.id != request.user.id:
+            detail = {
+                "detail": "Não é permitido para usuários de perfil anunciante"}
+            return response.Response(data=detail, status=status.HTTP_401_UNAUTHORIZED)
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
@@ -123,8 +125,10 @@ class DemandStatusUpdateView(generics.UpdateAPIView):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        if instance.author.id != request.user.id:
-            return response.Response(status=status.HTTP_401_UNAUTHORIZED)
+        if request.user.profile == 2 and instance.author.id != request.user.id:
+            detail = {
+                "detail": "Não é permitido para usuários de perfil anunciante"}
+            return response.Response(data=detail, status=status.HTTP_401_UNAUTHORIZED)
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)

@@ -1,12 +1,7 @@
 from django.urls import path, include
 from django.conf import settings
-from rest_framework import routers, serializers, viewsets
+from rest_framework import serializers
 from .models import Demand, Uf, City, Address, Contact
-from rest_framework.utils.field_mapping import (
-    ClassLookupDict, get_field_kwargs, get_nested_relation_kwargs,
-    get_relation_kwargs, get_url_kwargs
-)
-from rest_framework.utils import html, model_meta, representation
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -55,15 +50,19 @@ class DemandCreateSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=True)
     contacts = ContactSerializer(many=True)
     description = serializers.CharField(required=True)
+    id = serializers.IntegerField(read_only=True)
+    status = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Demand
         fields = [
+            'id',
             'description',
             'address',
-            'contacts'
+            'contacts',
+            'status'
         ]
-        read_only_fields = ['author', 'status']
+        read_only_fields = ['author']
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')

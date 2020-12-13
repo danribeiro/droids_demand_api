@@ -27,14 +27,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='Nome',
         max_length=80,
         blank=True,
-        default='',
         help_text='Nome do usuário'
     )
     last_name = models.CharField(
         verbose_name='Sobrenome',
         max_length=80,
         blank=True,
-        default='',
         help_text='Sobrenome do usuário'
     )
     date_joined = models.DateTimeField(auto_now_add=True)

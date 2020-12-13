@@ -4,7 +4,7 @@ from pathlib import Path
 from decouple import config, Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -65,6 +65,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'droids_demand_api.wsgi.application'
 
+FIXTURE_DIRS = (
+    str(BASE_DIR) + '/apps/demand/fixtures/',
+)
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

@@ -104,8 +104,8 @@ class Address(models.Model):
             self.number,
             self.sector,
             self.complement,
-            self.city,
-            self.uf,
+            self.city.__str__(),
+            self.uf.__str__(),
             self.zipcode
         )
         return complete_address
