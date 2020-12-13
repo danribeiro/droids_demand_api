@@ -66,7 +66,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'droids_demand_api.wsgi.application'
 
 FIXTURE_DIRS = (
-    str(BASE_DIR) + '/apps/demand/fixtures/',
+    os.path.join(BASE_DIR, "apps/demand/fixtures/uf_cities.json"),
+    os.path.join(BASE_DIR, "apps/accounts/fixtures/user.json")
 )
 
 # Database
@@ -74,12 +75,8 @@ FIXTURE_DIRS = (
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_DEFAULT_NAME'),
-        'USER': config('DB_DEFAULT_USER'),
-        'PASSWORD': config('DB_DEFAULT_PWD'),
-        'HOST': config('DB_DEFAULT_HOST'),
-        'PORT': config('DB_DEFAULT_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, "finxi.db"),
     }
 }
 
