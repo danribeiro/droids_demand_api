@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "25979959-e6fe-49b5-a30f-375f34131568",
+		"name": "droids demand api",
+		"description": "Droids Demand API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"admin@admin.com\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}api-token-auth/",
+					"host": [
+						"{{server}}api-token-auth"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API TOKEN AUTH generation"
+			},
+			"response": []
+		},
+		{
+			"name": "ufs",
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}ufs/",
+					"host": [
+						"{{server}}ufs"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "View for listing UF's"
+			},
+			"response": []
+		},
+		{
+			"name": "cities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}demand/uf/32/cities/",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						"uf",
+						"32",
+						"cities",
+						""
+					]
+				},
+				"description": "View for listing demands"
+			},
+			"response": []
+		},
+		{
+			"name": "create demand",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\":\"descricao da demanda para industria de droids\",\n    \"address\":{\n        \"street\":\"street\",\n        \"number\":\"123\",\n        \"complement\":\"complement\",\n        \"sector\":\"sextor\",\n        \"zipcode\":\"12323333\",\n        \"city_id\": 5763,\n        \"uf_id\": 32\n    },\n    \"contacts\":[\n        {\"name\":\"nome teste\",\"phone\":\"12345678911\"},\n        {\"name\":\"nome teste2\",\"phone\":\"12323233332\"},\n        {\"name\":\"nome teste3\",\"phone\":\"12345678911\"},\n        {\"name\":\"nome teste4\",\"phone\":\"12345678911\"}\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{server}}demand/",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "View for create demand"
+			},
+			"response": []
+		},
+		{
+			"name": "list demands",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "JWT {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{server}}demands",
+					"host": [
+						"{{server}}demands"
+					]
+				},
+				"description": "View for listing demands"
+			},
+			"response": []
+		},
+		{
+			"name": "update demand",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 48,\n    \"description\": \"ALTERADO descricao da demanda para industria de droids\",\n    \"author\": 1,\n    \"address\": {\n        \"id\": 43,\n        \"street\": \"ALTERADO\",\n        \"number\": \"321\",\n        \"complement\": \"complement\",\n        \"sector\": \"ALTERADO\",\n        \"zipcode\": \"47850000\",\n        \"city_id\": 5763,\n        \"uf_id\": 32\n    },\n    \"contacts\": [\n        {\n            \"name\": \"nome teste4 ALTERADO\",\n            \"phone\": \"12345678911\"\n        },\n        {\n            \"name\": \"nome teste3 ALTERADO\",\n            \"phone\": \"12345678911\"\n        },\n        {\n            \"name\": \"nome teste2 ALTERADO\",\n            \"phone\": \"12323233332\"\n        },\n        {\n            \"name\": \"nome teste ALTERADO\",\n            \"phone\": \"12345678911\"\n        }\n    ],\n    \"status\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}demand/48",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						"48"
+					]
+				},
+				"description": "View for update demand"
+			},
+			"response": []
+		},
+		{
+			"name": "delete demand",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}demand/14",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						"14"
+					]
+				},
+				"description": "View for delete demand"
+			},
+			"response": []
+		},
+		{
+			"name": "update demand status",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}demand/13/status/update/",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						"13",
+						"status",
+						"update",
+						""
+					]
+				},
+				"description": "A view for update demand status"
+			},
+			"response": []
+		},
+		{
+			"name": "detail demand",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{server}}demand/13",
+					"host": [
+						"{{server}}demand"
+					],
+					"path": [
+						"13"
+					]
+				},
+				"description": "A view for retrieve a demand"
+			},
+			"response": []
+		},
+		{
+			"name": "create user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "A view for create a user"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
