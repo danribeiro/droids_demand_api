@@ -122,19 +122,19 @@ class AapiTests(APITestCase):
         data = {
             "description": "Descrição da demanda para indústria de droids",
             "address": {
-                "street": "street",
-                "number": "123",
-                "complement": "complement",
-                "sector": "sector",
-                "zipcode": "12323333",
+                "street": "Rua São José",
+                "number": "1024",
+                "complement": "complemento",
+                "sector": "Bairro São Cristovão",
+                "zipcode": "34665000",
                 "city_id": 5763,
                 "uf_id": 32
             },
             "contacts": [
-                {"name": "nome teste1", "phone": "12345678911"},
-                {"name": "nome teste2", "phone": "12323233332"},
-                {"name": "nome teste3", "phone": "12345678911"},
-                {"name": "nome teste4", "phone": "12345678911"}
+                {"name": "José", "phone": "77999718542"},
+                {"name": "Roberto", "phone": "77999712342"},
+                {"name": "Alvaro", "phone": "77999716342"},
+                {"name": "Pedro", "phone": "77999711342"}
             ]
         }
 
@@ -162,22 +162,34 @@ class AapiTests(APITestCase):
 
         data_updated = {
             "id": demand_id,
-            "description": "ALTERADO descricao da demanda para industria de droids",
+            "description": "Descrição da demanda para indústria de droids (Registro alterado)",
             "address": {
-                "street": "ALTERADO",
-                "number": "321",
-                "complement": "complement",
-                "sector": "ALTERADO",
-                "zipcode": "47850000",
+                "street": "Rua São José (Registro alterado)",
+                "number": "1024",
+                "complement": "complemento (Registro alterado)",
+                "sector": "Bairro São Cristovão (Registro alterado)",
+                "zipcode": "34665000",
                 "city_id": 5763,
                 "uf_id": 32
             },
             "contacts": [
                 {
-                    "name": "nome teste4 ALTERADO",
-                    "phone": "12345678911"
+                    "name": "Pedro (Registro alterado)",
+                    "phone": "77999711342"
                 },
-            ],
+                {
+                    "name": "Alvaro (Registro alterado)",
+                    "phone": "77999716342"
+                },
+                {
+                    "name": "Roberto (Registro alterado)",
+                    "phone": "77999712342"
+                },
+                {
+                    "name": "José (Registro alterado)",
+                    "phone": "77999718542"
+                }
+            ]
         }
 
         # Update without token
@@ -215,22 +227,22 @@ class AapiTests(APITestCase):
         jwt_announcer_token = self.authAnnouncer()
 
         url = reverse('demand_create')
-        data = {
+        data = data = {
             "description": "Descrição da demanda para indústria de droids",
             "address": {
-                "street": "street",
-                "number": "123",
-                "complement": "complement",
-                "sector": "sector",
-                "zipcode": "12323333",
+                "street": "Rua São José",
+                "number": "1024",
+                "complement": "complemento",
+                "sector": "Bairro São Cristovão",
+                "zipcode": "34665000",
                 "city_id": 5763,
                 "uf_id": 32
             },
             "contacts": [
-                {"name": "nome teste1", "phone": "12345678911"},
-                {"name": "nome teste2", "phone": "12323233332"},
-                {"name": "nome teste3", "phone": "12345678911"},
-                {"name": "nome teste4", "phone": "12345678911"}
+                {"name": "José", "phone": "77999718542"},
+                {"name": "Roberto", "phone": "77999712342"},
+                {"name": "Alvaro", "phone": "77999716342"},
+                {"name": "Pedro", "phone": "77999711342"}
             ]
         }
         client = APIClient()
@@ -255,5 +267,4 @@ class AapiTests(APITestCase):
         response = client.get(reverse('demand_update_delete', args=[
             demand_id]), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        print(response.data)
         self.assertTrue(response.data.get('status'))
